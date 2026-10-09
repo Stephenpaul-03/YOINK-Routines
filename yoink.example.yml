@@ -1,0 +1,15 @@
+name: yoink
+editor: code
+
+commands:
+  hello:
+    description: Say hello with a name
+    steps:
+      - run: 'echo "Hello, $1"'
+
+  test-project:
+    confirm: true
+    steps:
+      - navigate: ~/projects/my-app
+      - run: npm test
+        timeout: 120

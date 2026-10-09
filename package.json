@@ -1,0 +1,23 @@
+{
+  "name": "yoink-routines",
+  "version": "1.0.0",
+  "description": "A small CLI for defining and running reusable command routines",
+  "main": "cli.js",
+  "bin": {
+    "yoink": "./cli.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:ci": "node --test",
+    "prepublishOnly": "npm test"
+  },
+  "keywords": ["cli", "routines", "yaml", "commands", "productivity"],
+  "author": "Stephen Paul",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "files": ["cli.js", "src", "README.md", "LICENSE", "yoink.example.yml"],
+  "engines": { "node": ">=18" }
+}
