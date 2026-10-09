@@ -30,11 +30,11 @@ test('runs a routine and forwards positional arguments', () => {
 test('dry run does not execute commands', () => {
   const setup = fs.mkdtempSync(path.join(os.tmpdir(), 'yoink-test-'));
   const target = path.join(setup, 'should-not-exist');
-  const { file, directory } = fixture(`name: yoink\ncommands:\n  touch:\n    steps:\n      - run: "touch ${target}"\n`);
-  const result = run(file, 'touch', '--dry-run');
+  const { file } = fixture('name: yoink\ncommands:\n  dry:\n    steps:\n      - run: "node -e \\\"process.exit(1)\\\""\n');
+  const result = run(file, 'dry', '--dry-run');
   assert.equal(result.status, 0);
   assert.match(result.stdout, /… run/);
-  assert.equal(fs.existsSync(path.join(directory, 'should-not-exist')), false);
+  assert.equal(fs.existsSync(target), false);
 });
 
 test('stops on failure and reports MISSED', () => {
