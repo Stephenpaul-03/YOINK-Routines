@@ -236,6 +236,7 @@ YOINK runs commands. It doesn't magically make Linux commands native to Windows.
 - **Interactive routine selection** for browsing and choosing commands.
 - **Stronger Windows and PowerShell support.**
 - **Routine-name completion** beyond built-in commands.
+- **A possible switch to TypeScript** as the codebase grows and stronger typing starts paying rent.
 
 The name promises an *Interactive Navigation Kit*. Today, it's primarily a YAML-driven command runner. The interactive part is catching up with the branding.
 
