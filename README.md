@@ -37,6 +37,8 @@ Just remember which directory you're editing. YOINK automates commands, not acco
 
 ### From npm
 
+The package is published on [npm](https://www.npmjs.com/package/yoink-routines).
+
 ```bash
 npm install --global yoink-routines
 ```
