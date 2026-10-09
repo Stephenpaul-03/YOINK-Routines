@@ -4,7 +4,7 @@
   "description": "A small CLI for defining and running reusable command routines",
   "main": "cli.js",
   "bin": {
-    "yoink": "./cli.js"
+    "yoink": "cli.js"
   },
   "scripts": {
     "test": "node --test",
