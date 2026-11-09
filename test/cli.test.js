@@ -20,7 +20,7 @@ function run(file, ...args) {
 }
 
 test('runs a routine and forwards positional arguments', () => {
-  const { file } = fixture('name: yoink\ncommands:\n  greet:\n    steps:\n      - run: \'printf "hello %s\\n" "$1"\'\n');
+  const { file } = fixture("name: yoink\ncommands:\n  greet:\n    steps:\n      - run: 'node -e \"console.log(''hello '' + process.argv[1])\" \"$1\"'\n");
   const result = run(file, 'greet', 'world', '--verbose');
   assert.equal(result.status, 0);
   assert.match(result.stdout, /hello world/);

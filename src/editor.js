@@ -2,6 +2,13 @@ const fs = require('node:fs');
 const { spawnSync } = require('node:child_process');
 const { shellQuote } = require('./runner');
 
+function quoteEditorFile(file) {
+  if (process.platform !== 'win32') return shellQuote(file);
+  // cmd.exe treats single quotes as ordinary filename characters. Quote Windows
+  // paths with double quotes so paths containing spaces reach the editor intact.
+  return `"${String(file).replace(/"/g, '""')}"`;
+}
+
 function editConfig(file, configuredEditor) {
   fs.mkdirSync(require('node:path').dirname(file), { recursive: true });
   if (!fs.existsSync(file)) fs.writeFileSync(file, 'name: yoink\n\ncommands:\n  example:\n    steps:\n      - run: echo hello\n');
@@ -14,9 +21,9 @@ function editConfig(file, configuredEditor) {
     } catch (error) { throw new Error(`could not parse ${file}: ${error.message}`); }
   }
   editor = editor || process.env.VISUAL || process.env.EDITOR || (process.platform === 'win32' ? 'notepad' : 'vi');
-  let result = spawnSync(`${editor} ${shellQuote(file)}`, { stdio: 'inherit', shell: true });
+  let result = spawnSync(`${editor} ${quoteEditorFile(file)}`, { stdio: 'inherit', shell: true });
   if (result.status === 127 || result.error) {
-    const fallback = process.platform === 'darwin' ? `open -t ${shellQuote(file)}` : process.platform === 'win32' ? `notepad ${shellQuote(file)}` : `vi ${shellQuote(file)}`;
+    const fallback = process.platform === 'darwin' ? `open -t ${quoteEditorFile(file)}` : process.platform === 'win32' ? `notepad ${quoteEditorFile(file)}` : `vi ${quoteEditorFile(file)}`;
     console.error(`YOINK: editor "${editor}" was not found; opening the file with a fallback editor.`);
     result = spawnSync(fallback, { stdio: 'inherit', shell: true });
   }
@@ -24,4 +31,4 @@ function editConfig(file, configuredEditor) {
   if (result.status !== 0) process.exit(result.status || 1);
 }
 
-module.exports = { editConfig };
+module.exports = { editConfig, quoteEditorFile };
